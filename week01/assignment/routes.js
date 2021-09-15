@@ -13,10 +13,12 @@ const requestHandler = (req, res) => {
   const method = req.method;
 
   if (url === '/') {
-    let body = '<h1>Hello again</h1>';
+    let body = '<h1>Hello</h1>';
     body = body + '<form action="/create-user" method="POST">';
+    body = body + '<h2>Add a user</h2>';
     body = body + '<input type="text" name="username"><button type="submit">Send</button>';
     body = body + '</form>'
+    body = body + '<a href="/users">Users</a>'
 
     templateWriter(res, 'Welcome', body);
 
@@ -24,7 +26,7 @@ const requestHandler = (req, res) => {
   }
 
   if (url === '/users') {
-    templateWriter(res, 'Users', '<ul><li>User 1</li><li>User 2</li></ul>');
+    templateWriter(res, 'Users', '<ul><li>User 1</li><li>User 2</li></ul><a href="/">Home</a>');
 
     return res.end();
   }
@@ -39,7 +41,7 @@ const requestHandler = (req, res) => {
       const parsedBody = Buffer.concat(body).toString();
       const username = parsedBody.split('=')[1];
       console.log(username);
-      templateWriter(res, 'Welcome', '<h1>Welcome, ' + username + '</h1>');
+      templateWriter(res, 'Welcome', '<h1>Welcome, ' + username + '</h1><a href="/users">Users</a>');
       return res.end();
     });
   }
